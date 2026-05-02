@@ -77,14 +77,14 @@ function languageSelect() {
 	div.appendChild(document.createElement("br"));
 
 	const ok = document.createElement("button");
-	ok.textContent = "Yes";
+	ok.textContent = translations["yes"][defaultLanguage];
 	ok.classList.add("hidden");
 
 	div.appendChild(ok);
 
 	const no = document.createElement("button");
-	ok.textContent = "No";
-	ok.classList.add("hidden");
+	no.textContent = translations["no"][defaultLanguage];
+	no.classList.add("hidden");
 
 	div.appendChild(no);
 
@@ -100,42 +100,48 @@ function languageSelect() {
 
 	function displayChoices(language, ind) {
 		select.classList.add("hidden");
-		speaker.src = `audio/${defaultLanguage}/narrator/confirm_language_start.mp3`;
+		speaker.src = `audio/${defaultLanguage}/narrator/confirm_select_start.mp3`;
 		speaker.load();
 		speaker.play();
 		speaker.onended = function() {
-			speaker.src = `audio/${defaultLanguage}/narrator/confirm_language_${language}.mp3`;
+			speaker.src = `audio/${defaultLanguage}/narrator/confirm_select_${language}.mp3`;
 			speaker.load();
 			speaker.play();
 			speaker.onended = function() {
-				speaker.src = `audio/${defaultLanguage}/narrator/confirm_language_end.mp3`;
+				speaker.src = `audio/${defaultLanguage}/narrator/confirm_select_end.mp3`;
 				speaker.load();
 				speaker.play();
-				speaker.onended = function() {
-					speaker.src = `audio/${language}/narrator/confirm_language_start.mp3`;
+				if (defaultLanguage !== language) {
+					speaker.onended = function() {
+					speaker.src = `audio/${language}/narrator/confirm_select_start.mp3`;
 					speaker.load();
 					speaker.play();
 					speaker.onended = function() {
-						speaker.src = `audio/${language}/narrator/confirm_language_${language}.mp3`;
+						speaker.src = `audio/${language}/narrator/confirm_select_${language}.mp3`;
 						speaker.load();
 						speaker.play();
 						speaker.onended = function() {
-							speaker.src = `audio/${language}/narrator/confirm_language_end.mp3`;
+							speaker.src = `audio/${language}/narrator/confirm_select_end.mp3`;
 							speaker.load();
 							speaker.play();
 						}
 					}
 				}
+				}
 			}
 		}
 		ok.classList.remove("hidden");
 		no.classList.remove("hidden");
-		ok.textContent = `${translations["yes"][defaultLanguage]} (${translations["yes"][language]})`;
-		no.textContent = `${translations["no"][defaultLanguage]} (${translations["no"][language]})`;
+		if (defaultLanguage !== language) {
+			ok.textContent = `${translations["yes"][defaultLanguage]} (${translations["yes"][language]})`;
+			no.textContent = `${translations["no"][defaultLanguage]} (${translations["no"][language]})`;
+		} else {
+			ok.textContent = `${translations["yes"][defaultLanguage]}`;
+			no.textContent = `${translations["no"][defaultLanguage]}`;
+		}
 		no.onclick = goBack;
 		line.style = "white-space: pre;";
-		line.textContent = `${translations["sureselect"][defaultLanguage]}"${languageOptions[ind][0]}"${translations["sureselectend"][defaultLanguage]}
-${translations["sureselect"][language]}"${languageOptions[ind][2]}"${translations["sureselectend"][language]}`;
+		line.textContent = `${translations["sureselect"][defaultLanguage]}"${languageOptions[ind][0]}"${translations["sureselectend"][defaultLanguage]}${defaultLanguage !== language ? `\n${translations["sureselect"][language]}"${languageOptions[ind][2]}"${translations["sureselectend"][language]}` : ""}`;
 	}
 
 	speaker = document.createElement("audio");
