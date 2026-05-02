@@ -1,0 +1,156 @@
+<html lang="en-US">
+	<head>
+		<style>
+.center {
+	text-align: center;
+}
+.hidden {
+	display: none;
+}
+.full {
+	text-align: center;
+	top: 50%;
+}
+body {
+	background: radial-gradient(#EEEEEE, #333333);
+	font-family: Arial, sans-serif;
+	color: black;
+}
+button {
+	background-image: linear-gradient(#CCCCCC, #AAAAAA);
+	border-radius: 8px;
+	cursor: pointer;
+	font-size: 16px;
+}
+		</style>
+	</head>
+	<body>
+		<button class="full" id="play">Play!</button>
+		<script>
+const playButton = document.getElementById("play");
+let speaker;
+
+function languageSelect() {
+	const defaultLanguage = "en-US";
+	const translations = {
+		"yes": {
+			"en-US": "Yes"
+		},
+		"no": {
+			"en-US": "No"
+		},
+		"sureselect": {
+			"en-US": "Are you sure you want to select "
+		},
+		"sureselectend": {
+			"en-US": "?"
+		},
+		"selectlanguage": {
+			"en-US": "Please select a language below."
+		}
+	}
+	playButton.remove();
+	const div = document.createElement("div");
+	div.classList.add("center");
+	div.style = "top: 20%;";
+	const line = document.createElement("a");
+	line.textContent = translations["selectlanguage"][defaultLanguage];
+	div.appendChild(line);
+	div.appendChild(document.createElement("br"));
+	div.appendChild(document.createElement("br"));
+	const select = document.createElement("select");
+	div.appendChild(select);
+
+	const languageOptions = [[["Please select a language.", "", "", ""]], [["American English", "en-US", "American English", "english_american"]].sort((x, y) => x[3].localeCompare(y[3]))].flat(1);
+
+	const options = languageOptions.map(x => {
+		const opt = document.createElement("option");
+
+		opt.textContent = x[0];
+		opt.value = x[1];
+
+		select.appendChild(opt);
+		return opt;
+	});
+
+	div.appendChild(document.createElement("br"));
+
+	const ok = document.createElement("button");
+	ok.textContent = "Yes";
+	ok.classList.add("hidden");
+
+	div.appendChild(ok);
+
+	const no = document.createElement("button");
+	ok.textContent = "No";
+	ok.classList.add("hidden");
+
+	div.appendChild(no);
+
+	function goBack() {
+		speaker.src = `audio/${defaultLanguage}/narrator/select_language.mp3`;
+		speaker.load();
+		speaker.play();
+		ok.classList.add("hidden");
+		no.classList.add("hidden");
+		select.classList.remove("hidden");
+		line.textContent = translations["selectlanguage"][defaultLanguage];
+	}
+
+	function displayChoices(language, ind) {
+		select.classList.add("hidden");
+		speaker.src = `audio/${defaultLanguage}/narrator/confirm_language_start.mp3`;
+		speaker.load();
+		speaker.play();
+		speaker.onended = function() {
+			speaker.src = `audio/${defaultLanguage}/narrator/confirm_language_${language}.mp3`;
+			speaker.load();
+			speaker.play();
+			speaker.onended = function() {
+				speaker.src = `audio/${defaultLanguage}/narrator/confirm_language_end.mp3`;
+				speaker.load();
+				speaker.play();
+				speaker.onended = function() {
+					speaker.src = `audio/${language}/narrator/confirm_language_start.mp3`;
+					speaker.load();
+					speaker.play();
+					speaker.onended = function() {
+						speaker.src = `audio/${language}/narrator/confirm_language_${language}.mp3`;
+						speaker.load();
+						speaker.play();
+						speaker.onended = function() {
+							speaker.src = `audio/${language}/narrator/confirm_language_end.mp3`;
+							speaker.load();
+							speaker.play();
+						}
+					}
+				}
+			}
+		}
+		ok.classList.remove("hidden");
+		no.classList.remove("hidden");
+		ok.textContent = `${translations["yes"][defaultLanguage]} (${translations["yes"][language]})`;
+		no.textContent = `${translations["no"][defaultLanguage]} (${translations["no"][language]})`;
+		no.onclick = goBack;
+		line.style = "white-space: pre;";
+		line.textContent = `${translations["sureselect"][defaultLanguage]}"${languageOptions[ind][0]}"${translations["sureselectend"][defaultLanguage]}
+${translations["sureselect"][language]}"${languageOptions[ind][2]}"${translations["sureselectend"][language]}`;
+	}
+
+	speaker = document.createElement("audio");
+	document.appendChild(speaker);
+	speaker.src = `audio/${defaultLanguage}/narrator/select_language.mp3`;
+	speaker.load();
+	speaker.play();
+
+	select.oninput = function() {
+		if (select.value) {
+			displayChoices(select.value, select.selectedIndex);
+		}
+	}
+}
+
+playButton.onclick = languageSelect;
+		</script>
+	</body>
+</html>
