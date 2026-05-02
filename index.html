@@ -102,6 +102,7 @@ function languageSelect() {
 		select.classList.remove("hidden");
 		line.textContent = translations["selectlanguage"][defaultLanguage];
 		speaker.onended = function() {};
+		select.selectedIndex = 0;
 	}
 
 	function displayChoices(language, ind) {
