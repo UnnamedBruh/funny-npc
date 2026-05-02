@@ -34,19 +34,24 @@ function languageSelect() {
 	const defaultLanguage = "en-US";
 	const translations = {
 		"yes": {
-			"en-US": "Yes"
+			"en-US": "Yes",
+			"zh-Hans": "是"
 		},
 		"no": {
-			"en-US": "No"
+			"en-US": "No",
+			"zh-Hans": "否"
 		},
 		"sureselect": {
-			"en-US": "Are you sure you want to select "
+			"en-US": "Are you sure you want to select \"",
+			"zh-Hans": "您确定要选择“"
 		},
 		"sureselectend": {
-			"en-US": "?"
+			"en-US": "\"?",
+			"zh-Hans": "”吗？"
 		},
 		"selectlanguage": {
-			"en-US": "Please select a language below."
+			"en-US": "Please select a language below.",
+			"zh-Hans": "请选择语言。"
 		}
 	}
 	playButton.remove();
@@ -62,7 +67,7 @@ function languageSelect() {
 	const select = document.createElement("select");
 	div.appendChild(select);
 
-	const languageOptions = [[["Please select a language.", "", "", ""]], [["American English", "en-US", "American English", "english_american"]].sort((x, y) => x[3].localeCompare(y[3]))].flat(1);
+	const languageOptions = [[["Please select a language.", "", "", ""]], [["American English", "en-US", "American English", "english_american"], ["Simplified Chinese (简体中文)", "zh-Hans", "简体中文", "chinese_simplified"]].sort((x, y) => x[3].localeCompare(y[3]))].flat(1);
 
 	const options = languageOptions.map(x => {
 		const opt = document.createElement("option");
@@ -96,6 +101,7 @@ function languageSelect() {
 		no.classList.add("hidden");
 		select.classList.remove("hidden");
 		line.textContent = translations["selectlanguage"][defaultLanguage];
+		speaker.onended = function() {};
 	}
 
 	function displayChoices(language, ind) {
@@ -141,7 +147,7 @@ function languageSelect() {
 		}
 		no.onclick = goBack;
 		line.style = "white-space: pre;";
-		line.textContent = `${translations["sureselect"][defaultLanguage]}"${languageOptions[ind][0]}"${translations["sureselectend"][defaultLanguage]}${defaultLanguage !== language ? `\n${translations["sureselect"][language]}"${languageOptions[ind][2]}"${translations["sureselectend"][language]}` : ""}`;
+		line.textContent = `${translations["sureselect"][defaultLanguage]}${languageOptions[ind][0]}${translations["sureselectend"][defaultLanguage]}${defaultLanguage !== language ? `\n${translations["sureselect"][language]}"${languageOptions[ind][2]}"${translations["sureselectend"][language]}` : ""}`;
 	}
 
 	speaker = document.createElement("audio");
