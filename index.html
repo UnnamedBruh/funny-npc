@@ -72,9 +72,9 @@ function languageSelect() {
 	const options = languageOptions.map(x => {
 		const opt = document.createElement("option");
 
-		opt.textContent = x[0];
+		opt.textContent = x[2][defaultLanguage];
 		if (x[1] !== defaultLanguage) {
-			opt.textContent += " (" + x[2][defaultLanguage] + ")";
+			opt.textContent += " (" + x[2][x[1]] + ")";
 		}
 		opt.value = x[1];
 
@@ -154,7 +154,7 @@ function languageSelect() {
 		}
 		no.onclick = goBack;
 		line.style = "white-space: pre;";
-		line.textContent = `${translations["sureselect"][defaultLanguage]}${languageOptions[ind][0]}${translations["sureselectend"][defaultLanguage]}${defaultLanguage !== language ? `\n${translations["sureselect"][language]}"${languageOptions[ind][2]}"${translations["sureselectend"][language]}` : ""}`;
+		line.textContent = `${translations["sureselect"][defaultLanguage]}${languageOptions[ind][2][defaultLanguage]}${translations["sureselectend"][defaultLanguage]}${defaultLanguage !== language ? `\n${translations["sureselect"][language]}"${languageOptions[ind][2][languageOptions[ind][1]]}"${translations["sureselectend"][language]}` : ""}`;
 	}
 
 	speaker = document.createElement("audio");
