@@ -154,7 +154,7 @@ function languageSelect() {
 		}
 		no.onclick = goBack;
 		line.style = "white-space: pre;";
-		line.textContent = `${translations["sureselect"][defaultLanguage]}${languageOptions[ind][2][defaultLanguage]}${translations["sureselectend"][defaultLanguage]}${defaultLanguage !== language ? `\n${translations["sureselect"][language]}"${languageOptions[ind][2][languageOptions[ind][1]]}"${translations["sureselectend"][language]}` : ""}`;
+		line.textContent = `${translations["sureselect"][defaultLanguage]}${languageOptions[ind][2][defaultLanguage]}${translations["sureselectend"][defaultLanguage]}${defaultLanguage !== language ? `\n${translations["sureselect"][language]}${languageOptions[ind][2][languageOptions[ind][1]]}${translations["sureselectend"][language]}` : ""}`;
 	}
 
 	speaker = document.createElement("audio");
