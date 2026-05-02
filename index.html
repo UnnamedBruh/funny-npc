@@ -9,7 +9,7 @@
 }
 .full {
 	text-align: center;
-	top: 50%;
+	margin-top: 50%;
 }
 body {
 	background: radial-gradient(#EEEEEE, #333333);
@@ -24,7 +24,7 @@ button {
 }
 		</style>
 	</head>
-	<body>
+	<body class="center">
 		<button class="full" id="play">Play!</button>
 		<script>
 const playButton = document.getElementById("play");
@@ -52,7 +52,8 @@ function languageSelect() {
 	playButton.remove();
 	const div = document.createElement("div");
 	div.classList.add("center");
-	div.style = "top: 20%;";
+	div.style = "margin-top: 20%;";
+	document.body.appendChild(div);
 	const line = document.createElement("a");
 	line.textContent = translations["selectlanguage"][defaultLanguage];
 	div.appendChild(line);
@@ -138,7 +139,7 @@ ${translations["sureselect"][language]}"${languageOptions[ind][2]}"${translation
 	}
 
 	speaker = document.createElement("audio");
-	document.appendChild(speaker);
+	document.body.appendChild(speaker);
 	speaker.src = `audio/${defaultLanguage}/narrator/select_language.mp3`;
 	speaker.load();
 	speaker.play();
