@@ -67,12 +67,15 @@ function languageSelect() {
 	const select = document.createElement("select");
 	div.appendChild(select);
 
-	const languageOptions = [[["Please select a language.", "", "", ""]], [["American English", "en-US", "American English", "english_american"], ["Simplified Chinese (简体中文)", "zh-Hans", "简体中文", "chinese_simplified"]].sort((x, y) => x[3].localeCompare(y[3]))].flat(1);
+	const languageOptions = [[["Please select a language.", "", "", ""]], [["American English", "en-US", {"en-US": "American English", "zh-Hans": "美式英语"}, "english_american"], ["Simplified Chinese", "zh-Hans", {"en-US": "Simplified Chinese", "zh-Hans": "简体中文"}, "chinese_simplified"]].sort((x, y) => x[3].localeCompare(y[3]))].flat(1);
 
 	const options = languageOptions.map(x => {
 		const opt = document.createElement("option");
 
 		opt.textContent = x[0];
+		if (x[1] !== defaultLanguage) {
+			opt.textContent += " (" + x[2][defaultLanguage] + ")";
+		}
 		opt.value = x[1];
 
 		select.appendChild(opt);
