@@ -31,7 +31,7 @@ const playButton = document.getElementById("play");
 let speaker;
 
 function languageSelect() {
-	const defaultLanguage = "en-US";
+	const defaultLanguage = new URL(window.location).searchParams.get("debug") ? prompt("What is the native language locale?") : navigator.language;
 	const translations = {
 		"yes": {
 			"en-US": "Yes",
