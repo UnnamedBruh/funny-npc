@@ -131,9 +131,12 @@ function languageSelect() {
 							speaker.src = `audio/${language}/narrator/confirm_select_end.mp3`;
 							speaker.load();
 							speaker.play();
+							speaker.onended = function() {};
 						}
 					}
 				}
+				} else {
+					speaker.onended = function() {};
 				}
 			}
 		}
