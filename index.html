@@ -182,6 +182,7 @@ function languageSelect() {
 			speaker.src = `audio/${defaultLanguage}/narrator/introduction.mp3`;
 			speaker.load();
 			speaker.play();
+			speaker.onended = function() {};
 			ok.onclick = function() {
 				line.textContent = translations["introduction2"][defaultLanguage];
 				speaker.src = `audio/${defaultLanguage}/narrator/introduction2.mp3`;
