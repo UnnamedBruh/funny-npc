@@ -24,7 +24,7 @@ button {
 }
 		</style>
 	</head>
-	<body>
+	<body class="center">
 		<button class="full" id="play">Play!</button>
 		<script>
 const playButton = document.getElementById("play");
@@ -34,9 +34,9 @@ function languageSelect() {
 	defaultLanguage = new URL(window.location).searchParams.has("debug") ? prompt("What is the native language locale?") : navigator.language;
 	const translations = {
 		"yes": {
-			"en-US": "Yes",
-			"zh-Hans": "是",
-			"es-ES": "Sí"
+			"en-US": "Yes", // US David
+			"zh-Hans": "是", // Yaoyao
+			"es-ES": "Sí" // Laura
 		},
 		"no": {
 			"en-US": "No",
@@ -59,7 +59,9 @@ function languageSelect() {
 			"es-ES": "Por favor, seleccione un idioma a continuación."
 		},
 		"introduction": {
-			"en-US": "In this game, you are going to interact with an NPC! They have a very dynamic personality!"
+			"en-US": "In this game, you are going to interact with an NPC! They have a very dynamic personality!",
+			"zh-Hans": "在这款游戏中，你将与一位NPC进行互动！他们拥有非常充满活力的个性！",
+			"es-ES": "¡Vas a interactuar con un PNJ! ¡Tiene una personalidad muy dinámica!"
 		}
 	}
 	playButton.remove();
