@@ -28,10 +28,10 @@ button {
 		<button class="full" id="play">Play!</button>
 		<script>
 const playButton = document.getElementById("play");
-let speaker;
+let speaker, defaultLanguage;
 
 function languageSelect() {
-	const defaultLanguage = new URL(window.location).searchParams.has("debug") ? prompt("What is the native language locale?") : navigator.language;
+	defaultLanguage = new URL(window.location).searchParams.has("debug") ? prompt("What is the native language locale?") : navigator.language;
 	const translations = {
 		"yes": {
 			"en-US": "Yes",
@@ -57,6 +57,9 @@ function languageSelect() {
 			"en-US": "Please select a language below.",
 			"zh-Hans": "请选择语言。",
 			"es-ES": "Por favor, seleccione un idioma a continuación."
+		},
+		"introduction": {
+			"en-US": "In this game, you are going to interact with an NPC! They have a very dynamic personality!"
 		}
 	}
 	playButton.remove();
@@ -156,6 +159,13 @@ function languageSelect() {
 		} else {
 			ok.textContent = `${translations["yes"][defaultLanguage]}`;
 			no.textContent = `${translations["no"][defaultLanguage]}`;
+		}
+		ok.onclick = function() {
+			[...div.children].forEach(x => {
+				if (x !== line && x !== ok) {x.remove();}
+			});
+			defaultLanguage = language;
+			line.textContent = translations["introduction"][defaultLanguage];
 		}
 		no.onclick = goBack;
 		line.style = "white-space: pre;";
