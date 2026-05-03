@@ -62,6 +62,16 @@ function languageSelect() {
 			"en-US": "In this game, you are going to interact with an NPC! They have a very dynamic personality!",
 			"zh-Hans": "在这款游戏中，你将与一位NPC进行互动！他们拥有非常充满活力的个性！",
 			"es-ES": "¡Vas a interactuar con un PNJ! ¡Tiene una personalidad muy dinámica!"
+		},
+		"introduction2": {
+			"en-US": "You can also toy and tease around with them, or just have a normal conversation. Either option works!",
+			"zh-Hans": "你可以逗逗他们，也可以进行正常的交谈。哪种方式都行！",
+			"es-ES": "También puedes bromear con ellos, o simplemente tener una conversación normal. ¡Cualquiera de las dos opciones funciona!"
+		},
+		"ok": {
+			"en-US": "Okay!",
+			"zh-Hans": "好！",
+			"es-ES": "¡Bueno!"
 		}
 	}
 	playButton.remove();
@@ -164,10 +174,20 @@ function languageSelect() {
 		}
 		ok.onclick = function() {
 			[...div.children].forEach(x => {
-				if (x !== line && x !== ok) {x.remove();}
+				if (x !== line && x !== ok && x.tagName !== "BR") {x.remove();}
 			});
 			defaultLanguage = language;
+			ok.textContent = `${translations["ok"][defaultLanguage]}`;
 			line.textContent = translations["introduction"][defaultLanguage];
+			speaker.src = `audio/${defaultLanguage}/narrator/introduction.mp3`;
+			speaker.load();
+			speaker.play();
+			ok.onclick = function() {
+				line.textContent = translations["introduction2"][defaultLanguage];
+				speaker.src = `audio/${defaultLanguage}/narrator/introduction2.mp3`;
+				speaker.load();
+				speaker.play();
+			}
 		}
 		no.onclick = goBack;
 		line.style = "white-space: pre;";
